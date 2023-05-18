@@ -29,7 +29,6 @@ return [
             'openssl',
             'mbstring',
             'tokenizer',
-            'Composer',
         ],
         'apache' => [
             'mod_rewrite',
