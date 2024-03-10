@@ -45,15 +45,15 @@ Uses package auto discovery feature, no need to edit the `config/app.php` file.
 Register the package with laravel in `config/app.php` under `providers` with the following:
 
 ```php
-	'providers' => [
-	    Safiull\LaravelInstaller\Providers\LaravelInstallerServiceProvider::class,
-	];
+'providers' => [
+	Safiull\LaravelInstaller\Providers\LaravelInstallerServiceProvider::class,
+];
 ```
 
 3. Publish the packages views, config file, assets, and language files by running the following from your projects root folder:
 
 ```bash
-    php artisan vendor:publish --tag=laravelinstaller
+	php artisan vendor:publish --tag=laravelinstaller
 ```
 
 ## Routes
