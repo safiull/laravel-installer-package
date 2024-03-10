@@ -33,7 +33,7 @@ The current features are :
 1. From your projects root folder in terminal run:
 
 ```bash
-    composer require safiull/laravel-installer
+	composer require safiull/laravel-installer
 ```
 
 2. Register the package
