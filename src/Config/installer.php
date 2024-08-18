@@ -12,6 +12,7 @@ return [
     | by looping through the array and run "extension_loaded" on it.
     |
     */
+
     'core' => [
         'minPhpVersion' => '7.0.0',
     ],
@@ -42,6 +43,7 @@ return [
     | requires more permissions just add them to the array list bellow.
     |
     */
+
     'permissions' => [
         'storage/framework/'     => '775',
         'storage/logs/'          => '775',
@@ -57,6 +59,7 @@ return [
     | https://laravel.com/docs/5.4/validation#available-validation-rules
     |
     */
+
     'environment' => [
         'form' => [
             'rules' => [
@@ -100,6 +103,7 @@ return [
     | canInstall middleware located in `canInstall.php`.
     |
     */
+
     'installed' => [
         'redirectOptions' => [
             'route' => [
@@ -125,6 +129,7 @@ return [
     | route, abort, dump, 404, default, ''
     |
     */
+
     'installedAlreadyAction' => '',
 
     /*
@@ -136,6 +141,7 @@ return [
     | Boolean value
     |
     */
+    
     'checkPurchaseCode' => true,
     'demoPurchaseCodeAllow' => true,
     'demoPurchaseCode' => '',
