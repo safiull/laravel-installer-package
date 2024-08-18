@@ -1,12 +1,13 @@
 <?php
 
-namespace Safiull\LaravelInstaller\Middleware;
+namespace Laravel\LaravelInstaller\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Log;
 
 class canUpdate
 {
-    use \Safiull\LaravelInstaller\Helpers\MigrationsHelper;
+    use \Laravel\LaravelInstaller\Helpers\MigrationsHelper;
 
     /**
      * Handle an incoming request.
@@ -18,6 +19,7 @@ class canUpdate
     public function handle($request, Closure $next)
     {
         $updateEnabled = filter_var(config('installer.updaterEnabled'), FILTER_VALIDATE_BOOLEAN);
+        Log::info('$updateEnabled'. $updateEnabled);
         switch ($updateEnabled) {
             case true:
                 $canInstall = new canInstall;
@@ -49,6 +51,7 @@ class canUpdate
      */
     public function alreadyUpdated()
     {
+        return false;
         $migrations = $this->getMigrations();
         $dbMigrations = $this->getExecutedMigrations();
 

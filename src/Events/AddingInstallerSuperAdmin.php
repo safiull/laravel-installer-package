@@ -7,8 +7,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Http\Request;
 use Illuminate\Queue\SerializesModels;
 
-class EnvironmentSaved
-{
+class AddingInstallerSuperAdmin {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     private $request;

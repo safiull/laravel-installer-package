@@ -1,6 +1,11 @@
 <?php
 
-Route::group(['prefix' => 'install', 'as' => 'LaravelInstaller::', 'namespace' => 'Safiull\LaravelInstaller\Controllers', 'middleware' => ['web', 'install']], function () {
+use Illuminate\Support\Facades\Route;
+
+Route::get('test', function () {
+   return 'tested';
+});
+Route::group(['prefix' => 'install', 'as' => 'LaravelInstaller::', 'namespace' => 'Laravel\LaravelInstaller\Controllers', 'middleware' => ['web', 'install']], function () {
     Route::get('/', [
         'as' => 'welcome',
         'uses' => 'WelcomeController@welcome',
@@ -41,6 +46,16 @@ Route::group(['prefix' => 'install', 'as' => 'LaravelInstaller::', 'namespace' =
         'uses' => 'PermissionsController@permissions',
     ]);
 
+    Route::get('verify-purchase-code', [
+        'as' => 'verify',
+        'uses' => 'PermissionsController@verify'
+    ]);
+
+    Route::post('purchase-code/verify/process', [
+        'as' => 'codeVerifyProcess',
+        'uses' => 'PermissionsController@codeVerifyProcess'
+    ]);
+
     Route::get('database', [
         'as' => 'database',
         'uses' => 'DatabaseController@database',
@@ -50,9 +65,10 @@ Route::group(['prefix' => 'install', 'as' => 'LaravelInstaller::', 'namespace' =
         'as' => 'final',
         'uses' => 'FinalController@finish',
     ]);
+
 });
 
-Route::group(['prefix' => 'update', 'as' => 'LaravelUpdater::', 'namespace' => 'Safiull\LaravelInstaller\Controllers', 'middleware' => 'web'], function () {
+Route::group(['prefix' => 'update', 'as' => 'LaravelUpdater::', 'namespace' => 'Laravel\LaravelInstaller\Controllers', 'middleware' => 'web'], function () {
     Route::group(['middleware' => 'update'], function () {
         Route::get('/', [
             'as' => 'welcome',
@@ -68,6 +84,24 @@ Route::group(['prefix' => 'update', 'as' => 'LaravelUpdater::', 'namespace' => '
             'as' => 'database',
             'uses' => 'UpdateController@database',
         ]);
+
+        Route::post('download-updated-code', [
+            'as' => 'downloadUpdatedCode',
+            'uses' => 'UpdateController@downloadUpdatedCode',
+        ]);
+
+        Route::get('downloadfile', [
+            'as' => 'downloadFile',
+            'uses' => 'UpdateController@downloadFile',
+        ]);
+        Route::get('downloaded', [
+            'as' => 'downloaded',
+            'uses' => 'UpdateController@downloaded',
+        ]);
+        Route::get('update-process', [
+            'as' => 'updateProcess',
+            'uses' => 'UpdateController@updateProcess',
+        ]);
     });
 
     // This needs to be out of the middleware because right after the migration has been
@@ -75,5 +109,23 @@ Route::group(['prefix' => 'update', 'as' => 'LaravelUpdater::', 'namespace' => '
     Route::get('final', [
         'as' => 'final',
         'uses' => 'UpdateController@finish',
+    ]);
+});
+
+
+Route::group(['prefix' => 'envato', 'as' => 'LaravelVerifier::', 'namespace' => 'Laravel\LaravelInstaller\Controllers', 'middleware' => 'web'], function () {
+
+    Route::get('code-verification', [
+        'as' => 'verifier',
+        'uses' => 'PermissionsController@verifier'
+    ]);
+
+});
+
+Route::group(['prefix' => 'envato', 'as' => 'LaravelInstaller::', 'namespace' => 'Laravel\LaravelInstaller\Controllers', 'middleware' => 'web'], function () {
+
+    Route::post('purchase-code/verify/process', [
+        'as' => 'codeVerifyProcess',
+        'uses' => 'PermissionsController@codeVerifyProcess'
     ]);
 });

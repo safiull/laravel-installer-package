@@ -1,9 +1,11 @@
 <?php
 
-namespace Safiull\LaravelInstaller\Controllers;
+namespace Laravel\LaravelInstaller\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Safiull\LaravelInstaller\Helpers\DatabaseManager;
+use Illuminate\Support\Facades\Hash;
+use Laravel\LaravelInstaller\Helpers\DatabaseManager;
 
 class DatabaseController extends Controller
 {
@@ -23,13 +25,20 @@ class DatabaseController extends Controller
     /**
      * Migrate and seed the database.
      *
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function database()
+    public function database(Request $request)
     {
         $response = $this->databaseManager->migrateAndSeed();
+        if($response['status'] == 'error') {
+            return redirect()->route('LaravelInstaller::environmentWizard')
+                ->with(['message' => $response]);
+        } else {
+            $this->databaseManager->passportInstall();
 
-        return redirect()->route('LaravelInstaller::final')
-                         ->with(['message' => $response]);
+            return redirect()->route('LaravelInstaller::final')
+                ->with(['message' => $response]);
+        }
     }
 }

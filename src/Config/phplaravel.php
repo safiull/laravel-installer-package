@@ -13,7 +13,7 @@ return [
     |
     */
     'core' => [
-        'minPhpVersion' => '8.1',
+        'minPhpVersion' => '7.0.0',
     ],
     'final' => [
         'key' => true,
@@ -21,14 +21,12 @@ return [
     ],
     'requirements' => [
         'php' => [
-            'GD',
-            'XML',
-            'pdo',
-            'JSON',
-            'cURL',
             'openssl',
+            'pdo',
             'mbstring',
             'tokenizer',
+            'JSON',
+            'cURL',
         ],
         'apache' => [
             'mod_rewrite',
@@ -45,9 +43,9 @@ return [
     |
     */
     'permissions' => [
-        'storage/framework/'     => '777',
-        'storage/logs/'          => '777',
-        'bootstrap/cache/'       => '777',
+        'storage/framework/'     => '775',
+        'storage/logs/'          => '775',
+        'bootstrap/cache/'       => '775',
     ],
 
     /*
@@ -112,7 +110,7 @@ return [
                 'type' => '404',
             ],
             'dump' => [
-                'data' => 'Dumping a not found message.',
+                'data' => 'Not Found.',
             ],
         ],
     ],
@@ -138,6 +136,12 @@ return [
     | Boolean value
     |
     */
+    'checkPurchaseCode' => true,
+    'demoPurchaseCodeAllow' => true,
+    'demoPurchaseCode' => '',
     'updaterEnabled' => 'true',
+    'headerkeys' => 'XPIkKM5C6JgyAWCfNfjZifz3Gj1GRM9toJ87zpsF',
 
+    'api_url' => 'https://itech.tradexpro.org',
+    'download_path' => '/../../../../..'
 ];

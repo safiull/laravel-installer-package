@@ -1,6 +1,6 @@
 <?php
 
-namespace Safiull\LaravelInstaller\Helpers;
+namespace Laravel\LaravelInstaller\Helpers;
 
 use Exception;
 use Illuminate\Database\SQLiteConnection;
@@ -21,6 +21,19 @@ class DatabaseManager
         $outputLog = new BufferedOutput;
 
         $this->sqlite($outputLog);
+
+        return $this->migrate($outputLog);
+    }
+
+    public function passportInstall()
+    {
+        $outputLog = new BufferedOutput;
+        try {
+            Artisan::call('passport:install',[], $outputLog);
+        }
+        catch(Exception $e) {
+            return $this->response($e->getMessage(), 'error', $outputLog);
+        }
 
         return $this->migrate($outputLog);
     }

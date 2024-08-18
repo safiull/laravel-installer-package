@@ -1,12 +1,12 @@
-@extends('vendor.installer.layouts.master')
+@extends('php-laravel.installer.layouts.master')
 
 @section('template_title')
-    {{ trans('installer_messages.permissions.templateTitle') }}
+    {{ trans('default_messages.permissions.templateTitle') }}
 @endsection
 
 @section('title')
     <i class="fa fa-key fa-fw" aria-hidden="true"></i>
-    {{ trans('installer_messages.permissions.title') }}
+    {{ trans('default_messages.permissions.title') }}
 @endsection
 
 @section('container')
@@ -25,8 +25,8 @@
 
     @if ( ! isset($permissions['errors']))
         <div class="buttons">
-            <a href="{{ route('LaravelInstaller::environment') }}" class="button">
-                {{ trans('installer_messages.permissions.next') }}
+            <a href="{{ route('LaravelInstaller::verify') }}" class="button">
+                {{ __('Next') }}
                 <i class="fa fa-angle-right fa-fw" aria-hidden="true"></i>
             </a>
         </div>

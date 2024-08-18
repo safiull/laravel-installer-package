@@ -1,6 +1,6 @@
 <?php
 
-namespace Safiull\LaravelInstaller\Events;
+namespace Laravel\LaravelInstaller\Events;
 
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;

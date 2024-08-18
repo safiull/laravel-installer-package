@@ -1,14 +1,20 @@
 <?php
 
-namespace Safiull\LaravelInstaller\Providers;
+namespace Laravel\LaravelInstaller\Providers;
 
+use Illuminate\Auth\CreatesUserProviders;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
-use Safiull\LaravelInstaller\Middleware\canInstall;
-use Safiull\LaravelInstaller\Middleware\canUpdate;
+use Laravel\LaravelInstaller\Helpers\UserTechGuard;
+use Laravel\LaravelInstaller\Middleware\canInstall;
+use Laravel\LaravelInstaller\Middleware\canUpdate;
 
 class LaravelInstallerServiceProvider extends ServiceProvider
 {
+    use CreatesUserProviders;
+
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -23,8 +29,26 @@ class LaravelInstallerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->publishFiles();
-        $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
+        Auth::extend('sessionss', function ($app, $name, $config) {
+            $provider = $this->createUserProvider($config['provider'] ?? null);
+            $guard = new UserTechGuard($name, $provider, $app['session.store']);
+            // When using the remember me functionality of the authentication services we
+            // will need to be set the encryption instance of the guard, which allows
+            // secure, encrypted cookie values to get generated for those cookies.
+            if (method_exists($guard, 'setCookieJar')) {
+                $guard->setCookieJar($app['cookie']);
+            }
+
+            if (method_exists($guard, 'setDispatcher')) {
+                $guard->setDispatcher($app['events']);
+            }
+
+            if (method_exists($guard, 'setRequest')) {
+                $guard->setRequest($app->refresh('request', $guard, 'setRequest'));
+            }
+
+            return $guard;
+        });
     }
 
     /**
@@ -34,8 +58,10 @@ class LaravelInstallerServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        $router->middlewareGroup('install', [CanInstall::class]);
-        $router->middlewareGroup('update', [CanUpdate::class]);
+        $this->publishFiles();
+        $this->loadRoutesFrom(__DIR__ . '/../Routes/web.php');
+        $router->middlewareGroup('install', [canInstall::class]);
+        $router->middlewareGroup('update', [canUpdate::class]);
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace Safiull\LaravelInstaller\Helpers;
+namespace Laravel\LaravelInstaller\Helpers;
 
 class PermissionsChecker
 {
